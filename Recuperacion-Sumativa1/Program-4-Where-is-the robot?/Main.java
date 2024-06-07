@@ -1,56 +1,30 @@
-import java.util.Scanner;
-
-public class Main{
-
-    private enum Direction {
-        POSITIVE_Y, NEGATIVE_X, NEGATIVE_Y, POSITIVE_X;
-
-        public Direction turn() {
-            switch (this) {
-                case POSITIVE_Y: return NEGATIVE_X;
-                case NEGATIVE_X: return NEGATIVE_Y;
-                case NEGATIVE_Y: return POSITIVE_X;
-                case POSITIVE_X: return POSITIVE_Y;
-                default: throw new IllegalArgumentException("Invalid direction");
-            }
-        }
-    }
-
+public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Ingrese la secuencia de pasos separados por espacios:");
-        String input = scanner.nextLine();
-        String[] stepsString = input.split(" ");
-        int[] steps = new int[stepsString.length];
-        for (int i = 0; i < stepsString.length; i++) {
-            steps[i] = Integer.parseInt(stepsString[i]);
-        }
-        System.out.println(whereIsTheRobot(steps));
-    }
-
-    private static String whereIsTheRobot(int[] steps) {
+        int[] robotsteps = {10, 5, -2};
         int x = 0;
         int y = 0;
-        Direction direction = Direction.POSITIVE_Y;
+        int direction = 0;
 
-        for (int step : steps) {
+        for (int steps : robotsteps) {
+
             switch (direction) {
-                case POSITIVE_Y:
-                    y += step;
+                case 0:
+                    y += steps;
                     break;
-                case NEGATIVE_X:
-                    x -= step;
+                case 1:
+                    x -= steps;
                     break;
-                case NEGATIVE_Y:
-                    y -= step;
+                case 2:
+                    y -= steps;
                     break;
-                case POSITIVE_X:
-                    x += step;
+                case 3:
+                    x += steps;
                     break;
             }
-            direction = direction.turn();
+            direction = (direction + 1) % 4;
         }
-        return "x: " + x + ", y: " + y + ", direction: " + direction;
+
+        System.out.println("final coordinates: (x: " + x + ", y: " + y + ")");
+
     }
 }
